@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Scoreboard</string>
+    <string name="local">Local</string>
+    <string name="visitante">Visitante</string>
+    <string name="futbol">Fútbol</string>
+    <string name="anotacion">Anotación</string>
+    <string name="l">L</string>
+    <string name="v">V</string>
+    <string name="cero">0</string>
+</resources>
