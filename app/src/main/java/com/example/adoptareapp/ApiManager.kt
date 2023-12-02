@@ -21,7 +21,7 @@ class ApiManager {
                 connection.requestMethod = "POST"
                 connection.doOutput = true
 
-                val postData = "email=$email&password=$password&tipoCuenta=${if (isAdopter) 1 else 0}"
+                val postData = "email=$email&password=$password&tipoCuenta=${if (isAdopter) "normal" else "refugio"}"
                 val outputStream: OutputStream = connection.outputStream
                 val writer = BufferedWriter(OutputStreamWriter(outputStream, "UTF-8"))
                 writer.write(postData)

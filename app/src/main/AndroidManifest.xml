@@ -4,6 +4,8 @@
     package="com.example.scoreboard">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -17,13 +19,16 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name="com.example.adoptareapp.RefugioActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.adoptareapp.RegisterActivity"
+            android:exported="false" />
+        <activity
             android:name="com.example.adoptareapp.GateActivity"
             android:exported="false" />
         <activity
             android:name="com.example.adoptareapp.LoginActivity"
-            android:exported="false" />
-        <activity
-            android:name="com.example.adoptareapp.RegisterActivity"
             android:exported="false" />
         <activity
             android:name="com.example.adoptareapp.MainActivity"

@@ -47,31 +47,39 @@ class LoginActivity : AppCompatActivity() {
             Request.Method.POST,
             url,
             jsonObject,
-            Response.Listener { response ->
+            { response ->
                 try {
                     val tipoCuenta = response.getString("tipoCuenta")
 
-                    if (tipoCuenta == "normal") {
-                        val intent = Intent(this@LoginActivity, GateActivity::class.java)
-                        startActivity(intent)
-                        finish()
-                    } else {
-                        // Manejar otros tipos de cuenta o acciones según sea necesario
+                    when (tipoCuenta) {
+                        "normal" -> {
+                            val intent = Intent(this@LoginActivity, GateActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        }
+                        "refugio" -> {
+                            val intent = Intent(this@LoginActivity, RefugioActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        }
+                        else -> {
+                            Toast.makeText(this, "Tipo de cuenta no soportado: $tipoCuenta", Toast.LENGTH_LONG).show()
+                        }
                     }
                 } catch (e: Exception) {
-                    e.printStackTrace()
+                    Toast.makeText(this, "Error al procesar la respuesta del servidor.", Toast.LENGTH_LONG).show()
+                    Log.e("LoginActivity", "Exception: ", e)
                 }
             },
-            Response.ErrorListener { error ->
-                // Manejar error de la API
-                Toast.makeText(this, "Error en la solicitud: ${error.networkResponse?.statusCode}", Toast.LENGTH_SHORT).show()
-                error.printStackTrace()
-
-                // Agregar esta línea para imprimir la respuesta en el logcat
-                Log.e("LoginActivity", "Error en la respuesta: ${String(error.networkResponse?.data ?: ByteArray(0))}")
+            { error ->
+                val statusCode = error.networkResponse?.statusCode ?: "Código no disponible"
+                val responseBody = error.networkResponse?.data?.let { String(it) } ?: "Respuesta no disponible"
+                Toast.makeText(this, "Error en la solicitud: $statusCode", Toast.LENGTH_LONG).show()
+                Log.d("LoginActivity", "Solicitud enviada: $url")
+                Log.d("LoginActivity", "Código de estado HTTP: $statusCode")
+                Log.e("LoginActivity", "Error en la respuesta: $responseBody")
             }
         )
-
 
         Volley.newRequestQueue(this).add(request)
     }

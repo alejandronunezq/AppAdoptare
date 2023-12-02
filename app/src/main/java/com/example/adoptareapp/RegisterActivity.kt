@@ -37,7 +37,7 @@ class RegisterActivity : AppCompatActivity() {
         // Llama a la función signUp en la clase ApiManager
         val success = apiManager.signUp(email, password, isAdopter)
 
-        // Aquí puedes manejar el resultado (por ejemplo, mostrar un mensaje al usuario)
+
         if (success) {
             Log.d("RegisterActivity", "Registro exitoso")
 

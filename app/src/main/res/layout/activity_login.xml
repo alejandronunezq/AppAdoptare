@@ -51,8 +51,8 @@
                 android:id="@+id/login_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/button_color"
-                android:text="Sign Up" />
+                android:backgroundTint="#F44336"
+                android:text="Sign In" />
 
             <ImageView
                 android:id="@+id/imageView3"

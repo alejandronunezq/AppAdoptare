@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.adoptareapp.RefugioActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/logo">
+
+        <EditText
+            android:id="@+id/etNombreMascota"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:hint="Nombre de la Mascota"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/etEdadMascota"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Edad de la Mascota"
+            android:inputType="text"
+            android:layout_below="@id/etNombreMascota"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"/>
+
+        <Button
+            android:id="@+id/btnSeleccionarImagen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Seleccionar Imagen"
+            android:layout_below="@id/etEdadMascota"
+            android:layout_marginTop="16dp"
+            android:layout_centerHorizontal="true"
+            android:backgroundTint="#F44336"/>
+
+        <ImageView
+            android:id="@+id/ivImagenMascota"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_below="@id/btnSeleccionarImagen"
+            android:layout_marginTop="16dp"
+            android:scaleType="centerCrop"/>
+
+        <Button
+            android:id="@+id/btnAgregarMascota"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Agregar Mascota"
+            android:layout_below="@id/ivImagenMascota"
+            android:layout_marginTop="16dp"
+            android:layout_centerHorizontal="true"
+            android:backgroundTint="#F44336"/>
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
