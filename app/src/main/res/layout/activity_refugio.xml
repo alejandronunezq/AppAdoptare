@@ -52,7 +52,7 @@
             android:scaleType="centerCrop"/>
 
         <Button
-            android:id="@+id/btnAgregarMascota"
+            android:id="@+id/btnGuardarMascota"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Agregar Mascota"
