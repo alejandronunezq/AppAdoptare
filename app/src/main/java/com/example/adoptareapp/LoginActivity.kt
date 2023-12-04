@@ -16,7 +16,7 @@ import org.json.JSONObject
 
 class LoginActivity : AppCompatActivity() {
 
-    private val apiBaseUrl = "http://10.0.2.2/API/getUser.php"
+    private val apiBaseUrl = "http://192.168.1.4/API/getUser.php"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

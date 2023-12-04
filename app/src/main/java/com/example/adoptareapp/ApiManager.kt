@@ -9,7 +9,7 @@ import java.net.URL
 
 class ApiManager {
     companion object {
-        const val BASE_URL = "http://10.0.2.2/API"
+        const val BASE_URL = "http://192.168.1.4/API"
     }
 
     inner class SignUpTask(private val email: String, private val password: String, private val isAdopter: Boolean) : AsyncTask<Void, Void, Boolean>() {

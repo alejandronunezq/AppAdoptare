@@ -29,7 +29,7 @@ class GateActivity : AppCompatActivity() {
     }
 
     private fun getPets() {
-        val url = "http://10.0.2.2/API/get_mascotas.php"
+        val url = "http://192.168.1.4/API/get_mascotas.php"
 
         val jsonArrayRequest = JsonArrayRequest(
             Request.Method.GET, url, null,
