@@ -1,8 +1,8 @@
 package com.example.adoptareapp
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -49,35 +49,42 @@ class LoginActivity : AppCompatActivity() {
             jsonObject,
             { response ->
                 try {
-                    val tipoCuenta = response.getString("tipoCuenta")
+                    if (response.getBoolean("success")) {
+                        val idUsuario = response.getInt("idusuario")
+                        val tipoCuenta = response.getString("tipoCuenta")
 
-                    when (tipoCuenta) {
-                        "normal" -> {
-                            val intent = Intent(this@LoginActivity, GateActivity::class.java)
-                            startActivity(intent)
-                            finish()
+                        // Guardar idUsuario y tipoCuenta en SharedPreferences
+                        val sharedPref = getSharedPreferences("MyApp", Context.MODE_PRIVATE)
+                        with(sharedPref.edit()) {
+                            putInt("idusuario", idUsuario)
+                            putString("tipoCuenta", tipoCuenta)
+                            apply()
                         }
-                        "refugio" -> {
-                            val intent = Intent(this@LoginActivity, RefugioActivity::class.java)
-                            startActivity(intent)
-                            finish()
+
+                        when (tipoCuenta) {
+                            "normal" -> {
+                                val intent = Intent(this@LoginActivity, GateActivity::class.java)
+                                startActivity(intent)
+                                finish()
+                            }
+                            "refugio" -> {
+                                val intent = Intent(this@LoginActivity, RefugioActivity::class.java)
+                                startActivity(intent)
+                                finish()
+                            }
+                            else -> {
+                                Toast.makeText(this, "Tipo de cuenta no soportado: $tipoCuenta", Toast.LENGTH_LONG).show()
+                            }
                         }
-                        else -> {
-                            Toast.makeText(this, "Tipo de cuenta no soportado: $tipoCuenta", Toast.LENGTH_LONG).show()
-                        }
+                    } else {
+                        Toast.makeText(this, response.getString("message"), Toast.LENGTH_LONG).show()
                     }
                 } catch (e: Exception) {
                     Toast.makeText(this, "Error al procesar la respuesta del servidor.", Toast.LENGTH_LONG).show()
-                    Log.e("LoginActivity", "Exception: ", e)
                 }
             },
             { error ->
-                val statusCode = error.networkResponse?.statusCode ?: "Código no disponible"
-                val responseBody = error.networkResponse?.data?.let { String(it) } ?: "Respuesta no disponible"
-                Toast.makeText(this, "Error en la solicitud: $statusCode", Toast.LENGTH_LONG).show()
-                Log.d("LoginActivity", "Solicitud enviada: $url")
-                Log.d("LoginActivity", "Código de estado HTTP: $statusCode")
-                Log.e("LoginActivity", "Error en la respuesta: $responseBody")
+                Toast.makeText(this, "Error en la solicitud: ${error.toString()}", Toast.LENGTH_LONG).show()
             }
         )
 

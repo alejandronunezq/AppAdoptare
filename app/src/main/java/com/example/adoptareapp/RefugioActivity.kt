@@ -2,6 +2,7 @@ package com.example.adoptareapp
 
 import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -16,17 +17,15 @@ import androidx.core.content.ContextCompat
 import com.android.volley.NetworkResponse
 import com.android.volley.Request
 import com.android.volley.Response
-import com.android.volley.VolleyLog
 import com.android.volley.toolbox.HttpHeaderParser
-import java.io.ByteArrayInputStream
-import java.io.ByteArrayOutputStream
-import java.io.DataOutputStream
-import java.io.IOException
-
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.example.scoreboard.R
 import org.json.JSONObject
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
+import java.io.DataOutputStream
+import java.io.IOException
 
 class VolleyMultipartRequest(
     method: Int,
@@ -97,7 +96,6 @@ class RefugioActivity : AppCompatActivity() {
     private lateinit var imageView: ImageView
     private lateinit var nombreEditText: EditText
     private lateinit var edadEditText: EditText
-    private var idRefugio: Int = 1
     private var imageUri: Uri? = null
     private val IMAGE_PICK_CODE = 1000
 
@@ -113,8 +111,7 @@ class RefugioActivity : AppCompatActivity() {
 
         btnSeleccionarImagen.setOnClickListener {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED
-            ) {
+                != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(
                     this,
                     arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
@@ -160,9 +157,8 @@ class RefugioActivity : AppCompatActivity() {
         val multipartRequest = VolleyMultipartRequest(
             Request.Method.POST, url,
             Response.Listener<NetworkResponse> { response ->
-
                 val responseString = String(response.data)
-                enviarDatosAlServidor(imageName, nombreEditText.text.toString(), edadEditText.text.toString(), idRefugio)
+                enviarDatosAlServidor(imageName, nombreEditText.text.toString(), edadEditText.text.toString())
                 Toast.makeText(this, responseString, Toast.LENGTH_LONG).show()
             },
             Response.ErrorListener { error ->
@@ -178,12 +174,19 @@ class RefugioActivity : AppCompatActivity() {
         }
     }
 
-    private fun enviarDatosAlServidor(imageName: String, nombre: String, edad: String, idRefugio: Int) {
+    private fun enviarDatosAlServidor(imageName: String, nombre: String, edad: String) {
+        val sharedPref = getSharedPreferences("MyApp", Context.MODE_PRIVATE)
+        val idRefugio = sharedPref.getInt("idusuario", -1)
+        if (idRefugio == -1) {
+            Toast.makeText(this, "Error al obtener ID del refugio.", Toast.LENGTH_SHORT).show()
+            return
+        }
+
         val url = "http://192.168.1.4/API/put_mascotas.php"
         val params = HashMap<String, String>().apply {
             put("nombre", nombre)
             put("edad", edad)
-            put("imagen", imageName)  // Nombre del archivo de imagen
+            put("imagen", imageName)
             put("idRefugio", idRefugio.toString())
         }
 
@@ -191,17 +194,19 @@ class RefugioActivity : AppCompatActivity() {
         val request = JsonObjectRequest(Request.Method.POST, url, jsonObject,
             { response ->
                 Toast.makeText(this, "Mascota añadida exitosamente", Toast.LENGTH_SHORT).show()
+                resetUI()
             },
             { error ->
-                Toast.makeText(
-                    this,
-                    "Error al añadir mascota: ${error.message}",
-                    Toast.LENGTH_SHORT
-                ).show()
+                Toast.makeText(this, "Error al añadir mascota: ${error.message}", Toast.LENGTH_SHORT).show()
             })
 
         Volley.newRequestQueue(this).add(request)
-
     }
 
+    private fun resetUI() {
+        imageView.setImageResource(0)
+        nombreEditText.text.clear()
+        edadEditText.text.clear()
+        imageUri = null
+    }
 }
