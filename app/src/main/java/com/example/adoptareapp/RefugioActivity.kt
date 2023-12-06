@@ -122,6 +122,13 @@ class RefugioActivity : AppCompatActivity() {
                 seleccionarImagen()
             }
         }
+
+        val btnVerMascotas: Button = findViewById(R.id.btnVerMascotas)
+        btnVerMascotas.setOnClickListener {
+            val intent = Intent(this, MascotasListActivity::class.java)
+            startActivity(intent)
+        }
+
         val btnCerrarSesion: Button = findViewById(R.id.btnCerrarSesion)
         btnCerrarSesion.setOnClickListener {
             confirmarCerrarSesion()
