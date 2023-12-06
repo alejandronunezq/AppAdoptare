@@ -164,7 +164,7 @@ class RefugioActivity : AppCompatActivity() {
     }
 
     private fun uploadImage(imageUri: Uri?, imageName: String) {
-        val url = "http://192.168.1.4/API/upload_image.php"
+        val url = "http://10.0.2.2/API/upload_image.php"
 
         val multipartRequest = VolleyMultipartRequest(
             Request.Method.POST, url,
@@ -194,7 +194,7 @@ class RefugioActivity : AppCompatActivity() {
             return
         }
 
-        val url = "http://192.168.1.4/API/put_mascotas.php"
+        val url = "http://10.0.2.2/API/put_mascotas.php"
         val params = HashMap<String, String>().apply {
             put("nombre", nombre)
             put("edad", edad)
@@ -223,7 +223,7 @@ class RefugioActivity : AppCompatActivity() {
     }
 
     private fun cerrarSesion() {
-        val url = "http://192.168.1.4/API/logout.php"
+        val url = "http://10.0.2.2/API/logout.php"
 
         val jsonObjectRequest = JsonObjectRequest(
             Request.Method.POST, url, null,

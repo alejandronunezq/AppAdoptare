@@ -35,7 +35,7 @@ class MascotasListActivity : AppCompatActivity() {
         val idRefugio = sharedPref.getInt("idusuario", -1) // Obtiene el idusuario de las preferencias
 
         if (idRefugio != -1) {
-            val url = "http://192.168.1.4/API/petList.php?idRefugio=$idRefugio"
+            val url = "http://10.0.2.2/API/petList.php?idRefugio=$idRefugio"
 
             val jsonArrayRequest = JsonArrayRequest(
                 Request.Method.GET, url, null,
