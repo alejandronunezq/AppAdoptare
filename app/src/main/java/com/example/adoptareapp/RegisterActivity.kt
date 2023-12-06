@@ -19,32 +19,30 @@ class RegisterActivity : AppCompatActivity() {
 
         apiManager = ApiManager()
 
+        val emailEditText: EditText = findViewById(R.id.email)
+        val passwordEditText: EditText = findViewById(R.id.password)
+        val phoneEditText: EditText = findViewById(R.id.phone)
+        val isAdopterRadioButton: RadioButton = findViewById(R.id.radio_adopter)
         val signUpButton: Button = findViewById(R.id.login_button)
+
         signUpButton.setOnClickListener {
-            signUp()
+            val email = emailEditText.text.toString()
+            val password = passwordEditText.text.toString()
+            val phone = phoneEditText.text.toString()
+            val isAdopter = isAdopterRadioButton.isChecked
+
+            signUp(email, password, isAdopter, phone)
         }
     }
 
-    private fun signUp() {
-        val emailEditText: EditText = findViewById(R.id.email)
-        val passwordEditText: EditText = findViewById(R.id.password)
-        val isAdopterRadioButton: RadioButton = findViewById(R.id.radio_adopter)
-
-        val email = emailEditText.text.toString()
-        val password = passwordEditText.text.toString()
-        val isAdopter = isAdopterRadioButton.isChecked
-
-        // Llama a la función signUp en la clase ApiManager
-        val success = apiManager.signUp(email, password, isAdopter)
-
+    private fun signUp(email: String, password: String, isAdopter: Boolean, phone: String) {
+        val success = apiManager.signUp(email, password, isAdopter, phone)
 
         if (success) {
             Log.d("RegisterActivity", "Registro exitoso")
-
-            // Redirige a la MainActivity después del registro exitoso
             val mainActivityIntent = Intent(this, MainActivity::class.java)
             startActivity(mainActivityIntent)
-            finish()  // Esto evita que el usuario regrese a la pantalla de registro al presionar "Atrás"
+            finish()
         } else {
             Log.e("RegisterActivity", "Error en el registro")
         }

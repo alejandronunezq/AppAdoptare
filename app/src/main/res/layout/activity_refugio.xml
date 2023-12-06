@@ -20,18 +20,22 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
             android:hint="Nombre de la Mascota"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:textColor="#000000"
+            android:textColorHighlight="#000000" />
 
         <EditText
             android:id="@+id/etEdadMascota"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/etNombreMascota"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="16dp"
             android:hint="Edad de la Mascota"
             android:inputType="text"
-            android:layout_below="@id/etNombreMascota"
-            android:layout_marginTop="8dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"/>
+            android:textColor="#000000"
+            android:textColorHighlight="#000000" />
 
         <Button
             android:id="@+id/btnSeleccionarImagen"
@@ -41,7 +45,7 @@
             android:layout_below="@id/etEdadMascota"
             android:layout_marginTop="16dp"
             android:layout_centerHorizontal="true"
-            android:backgroundTint="#F44336"/>
+            android:backgroundTint="#8BC34A"/>
 
         <ImageView
             android:id="@+id/ivImagenMascota"
@@ -60,6 +64,22 @@
             android:layout_marginTop="16dp"
             android:layout_centerHorizontal="true"
             android:backgroundTint="#F44336"/>
+
+        <Button
+            android:id="@+id/btnCerrarSesion"
+            android:layout_width="wrap_content"
+            android:layout_height="37dp"
+            android:layout_below="@+id/btnGuardarMascota"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="124dp"
+            android:layout_marginTop="141dp"
+            android:layout_marginEnd="109dp"
+            android:layout_marginBottom="79dp"
+            android:backgroundTint="#A50B00"
+            android:text="Cerrar Sesion" />
+
 
     </RelativeLayout>
 

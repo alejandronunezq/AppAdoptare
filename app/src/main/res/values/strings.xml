@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Adoptare</string>
-
+    <string name="logout">Cerrar Sesión</string>
+    <string name="perfil">Perfil</string>
 </resources>

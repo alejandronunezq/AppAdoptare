@@ -52,12 +52,14 @@ class LoginActivity : AppCompatActivity() {
                     if (response.getBoolean("success")) {
                         val idUsuario = response.getInt("idusuario")
                         val tipoCuenta = response.getString("tipoCuenta")
+                        val telefono = response.getString("telefono")
 
-                        // Guardar idUsuario y tipoCuenta en SharedPreferences
+
                         val sharedPref = getSharedPreferences("MyApp", Context.MODE_PRIVATE)
                         with(sharedPref.edit()) {
                             putInt("idusuario", idUsuario)
                             putString("tipoCuenta", tipoCuenta)
+                            putString("telefono", telefono)
                             apply()
                         }
 

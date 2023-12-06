@@ -51,6 +51,14 @@
                 android:hint="Confirmar contraseña"
                 android:inputType="textPassword" />
 
+            <EditText
+                android:id="@+id/phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Número de Teléfono"
+                android:inputType="phone"
+                android:maxLength="10" />
+
             <RadioButton
                 android:id="@+id/radio_refuge"
                 android:layout_width="wrap_content"
@@ -62,6 +70,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Busco adoptar" />
+
 
             <Button
                 android:id="@+id/login_button"

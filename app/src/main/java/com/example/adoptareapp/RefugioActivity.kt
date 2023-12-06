@@ -2,6 +2,7 @@ package com.example.adoptareapp
 
 import android.Manifest
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -121,6 +122,10 @@ class RefugioActivity : AppCompatActivity() {
                 seleccionarImagen()
             }
         }
+        val btnCerrarSesion: Button = findViewById(R.id.btnCerrarSesion)
+        btnCerrarSesion.setOnClickListener {
+            confirmarCerrarSesion()
+        }
 
         btnGuardarMascota.setOnClickListener {
             if (imageUri == null || nombreEditText.text.isEmpty() || edadEditText.text.isEmpty()) {
@@ -209,4 +214,45 @@ class RefugioActivity : AppCompatActivity() {
         edadEditText.text.clear()
         imageUri = null
     }
+
+    private fun cerrarSesion() {
+        val url = "http://192.168.1.4/API/logout.php"
+
+        val jsonObjectRequest = JsonObjectRequest(
+            Request.Method.POST, url, null,
+            { response ->
+
+                val success = response.getBoolean("success")
+                if (success) {
+
+                    val sharedPreferences = getSharedPreferences("MyApp", Context.MODE_PRIVATE)
+                    sharedPreferences.edit().clear().apply()
+
+
+                    val intent = Intent(this, LoginActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                    finish()
+                } else {
+                    val message = response.getString("message")
+                    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+                }
+            },
+            { error ->
+
+                Toast.makeText(this, "Error al cerrar sesión: ${error.message}", Toast.LENGTH_SHORT).show()
+            }
+        )
+
+        Volley.newRequestQueue(this).add(jsonObjectRequest)
+    }
+    private fun confirmarCerrarSesion() {
+        AlertDialog.Builder(this)
+            .setMessage("¿Estás seguro de que quieres cerrar sesión?")
+            .setPositiveButton("Sí") { _, _ -> cerrarSesion() }
+            .setNegativeButton("No") { dialog, _ -> dialog.dismiss() }
+            .show()
+    }
+
+
 }
